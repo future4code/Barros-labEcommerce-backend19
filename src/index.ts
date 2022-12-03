@@ -105,10 +105,6 @@ app.get("/users/:user_id/purchases", async(req:Request, res:Response) => {
             throw new Error("Missing params.");
         }
         let result = await getUserPurchase(userId)
-        if (result.length === 0) {
-            errorCode = 404;
-            throw new Error("User not found");
-        }
         res.status(200).send(result)
     } catch (error:any) {
         res.status(errorCode).send(error.message)
