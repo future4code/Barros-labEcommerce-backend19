@@ -7,6 +7,7 @@ import { addNewProduct } from "./endpoints/addNewProduct"
 import { connection } from "./connection"
 import { addPurchase } from "./endpoints/addPurchase"
 import { getUserPurchase } from "./endpoints/getUserPurchase"
+import { AddressInfo } from "net"
 
 const app = express()
 
@@ -14,8 +15,13 @@ app.use(express.json())
 
 app.use(cors())
 
-app.listen(3003, () => {
-    console.log("Server is running in http://localhost:3003");
+const server = app.listen(process.env.PORT || 3003, () => {
+    if (server) {
+        const address = server.address() as AddressInfo;
+        console.log(`Server is running at localhost:${address.port}`);
+    } else {
+        console.error(`Failure upon starting server.`);   
+    }
 });
 
 // add new user
